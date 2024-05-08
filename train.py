@@ -11,12 +11,19 @@ from torch.utils.tensorboard import SummaryWriter
 def str2bool(v):
     return v.lower() in ('true')
 
-# Default args used for Diginetica 
+import pickle
 
-class Diginetica_arg():
-    dataset = 'diginetica'
-    batchSize = 50
-    hiddenSize = 100
+def _load_file(filename):
+  with open(filename, 'rb') as fn:
+    data = pickle.load(fn)
+  return data
+
+# Default args used for yoochoose-data-64
+
+class yoochoose_data_64():
+    dataset = 'yoochoose_data_64'
+    batchSize = 75
+    hiddenSize = 120
     epoch = 30
     lr = 0.001
     lr_dc = 0.1
@@ -26,7 +33,6 @@ class Diginetica_arg():
     patience = 10
     nonhybrid = True
     validation = True
-    valid_portion = 0.1
 
 
 # Default args used for Yoochoose1_64
@@ -51,11 +57,9 @@ def main(opt):
     model_save_dir = 'saved/'
     writer = SummaryWriter(log_dir='with_pos/logs')
 
-    if opt.dataset == 'diginetica':
-        train_data = pickle.load(
-            open('datasets/cikm16/raw' + '/train.txt', 'rb'))
-        test_data = pickle.load(
-            open('datasets/cikm16/raw' + '/test.txt', 'rb'))
+    if opt.dataset == 'yoochoose_data_64':
+        train_data = _load_file('datasets/yoochoose-data-64/train.pkl')
+        test_data = _load_file('datasets/yoochoose-data-64/test.pkl')
 
     elif opt.dataset == 'yoochoose1_64':
         train_data = pickle.load(
@@ -73,9 +77,7 @@ def main(opt):
     train_data = Dataset(train_data, shuffle=True)
     test_data = Dataset(test_data, shuffle=False)
 
-    if opt.dataset == 'diginetica':
-        n_node = 43098
-    elif opt.dataset == 'yoochoose1_64' or opt.dataset == 'yoochoose1_4':
+    if opt.dataset == 'yoochoose1_64' or opt.dataset == 'yoochoose_data_64':
         n_node = 37484
     else:
         n_node = 310
@@ -127,8 +129,8 @@ def main(opt):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', default='diginetica',
-                        help='Dataset name: diginetica | yoochoose1_64')
+    parser.add_argument('--dataset', default='yoochoose_data_64',
+                        help='Dataset name: yoochoose_data_64 | yoochoose1_64')
     parser.add_argument('--defaults', type=str2bool,
                         default=True, help='Use default configuration')
     parser.add_argument('--batchSize', type=int,
@@ -153,9 +155,8 @@ if __name__ == '__main__':
     opt = parser.parse_args()
 
     if opt.defaults:
-        if opt.dataset == 'diginetica':
-            opt = Diginetica_arg()
-
+        if opt.dataset == 'yoochoose_data_64':
+            opt = yoochoose_data_64()
         else:
             opt = Yoochoose_arg()
 
