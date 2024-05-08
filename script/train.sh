@@ -1,1 +1,1 @@
-python3 train.py --dataset yoochoose_data_64
+CUDA_VISIBLE_DEVICES=1 python3 train.py --dataset yoochoose_data_64

@@ -33,6 +33,7 @@ class yoochoose_data_64():
     patience = 10
     nonhybrid = True
     validation = True
+    valid_portion = 0.1
 
 
 # Default args used for Yoochoose1_64
@@ -58,8 +59,8 @@ def main(opt):
     writer = SummaryWriter(log_dir='with_pos/logs')
 
     if opt.dataset == 'yoochoose_data_64':
-        train_data = _load_file('datasets/yoochoose-data-64/train.pkl')
-        test_data = _load_file('datasets/yoochoose-data-64/test.pkl')
+        train_data = _load_file('datasets/yoochoose_data_64/train.pkl')
+        test_data = _load_file('datasets/yoochoose_data_64/test.pkl')
 
     elif opt.dataset == 'yoochoose1_64':
         train_data = pickle.load(
