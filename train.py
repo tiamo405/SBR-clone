@@ -81,7 +81,7 @@ def main(opt):
     if opt.dataset == 'yoochoose1_64' :
         n_node = 37484
     elif opt.dataset == 'yoochoose_data_64':
-        n_node = 34151
+        n_node = 22055
 
     model = to_cuda(Attention_SessionGraph(opt, n_node))
     start = time.time()
