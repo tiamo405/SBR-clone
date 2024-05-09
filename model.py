@@ -152,10 +152,11 @@ def to_cuda(input_variable):
 
 
 def to_cpu(input_variable):
-    if torch.cuda.is_available():
-        return input_variable.cpu()
-    else:
-        return input_variable
+    return input_variable.cpu()
+    # if torch.cuda.is_available():
+    #     return input_variable.cpu()
+    # else:
+    #     return input_variable
 
 
 def forward(model, i, data):
@@ -202,7 +203,7 @@ def train_test(model, train_data, test_data):
     for i in slices:
         targets, scores = forward(model, i, test_data)
         sub_scores = scores.topk(20)[1]
-        sub_scores = to_cuda(sub_scores).detach().numpy()
+        sub_scores = to_cpu(sub_scores).detach().numpy()
 
         for score, target, mask in zip(sub_scores, targets, test_data.mask):
             hit.append(np.isin(target - 1, score))
