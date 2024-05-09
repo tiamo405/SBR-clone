@@ -24,7 +24,7 @@ class yoochoose_data_64():
     dataset = 'yoochoose_data_64'
     batchSize = 75
     hiddenSize = 120
-    epoch = 30
+    epoch = 1
     lr = 0.001
     lr_dc = 0.1
     lr_dc_step = 3
@@ -71,17 +71,17 @@ def main(opt):
     if opt.validation:
         train_data, valid_data = split_validation(
             train_data, opt.valid_portion)
-        test_data = valid_data
+        # test_data = valid_data
     else:
         print('Testing dataset used validation set')
 
     train_data = Dataset(train_data, shuffle=True)
     test_data = Dataset(test_data, shuffle=False)
 
-    if opt.dataset == 'yoochoose1_64' or opt.dataset == 'yoochoose_data_64':
+    if opt.dataset == 'yoochoose1_64' :
         n_node = 37484
-    else:
-        n_node = 310
+    elif opt.dataset == 'yoochoose_data_64':
+        n_node = 34151
 
     model = to_cuda(Attention_SessionGraph(opt, n_node))
     start = time.time()
@@ -130,7 +130,7 @@ def main(opt):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', default='yoochoose_data_64',
+    parser.add_argument('--dataset', default='yoochoose1_64',
                         help='Dataset name: yoochoose_data_64 | yoochoose1_64')
     parser.add_argument('--defaults', type=str2bool,
                         default=True, help='Use default configuration')
