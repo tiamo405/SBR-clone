@@ -38,7 +38,7 @@ class AGC(optim.Optimizer):
       model (torch.nn.Module, optional): The original model
       ignore_agc (str, Iterable, optional): Layers for AGC to ignore
     """
-
+ 
     def __init__(self, params, optim: optim.Optimizer, clipping: float = 1e-2, eps: float = 1e-3, model=None, ignore_agc= ['']):
         if clipping < 0.0:
             raise ValueError("Invalid clipping value: {}".format(clipping))
