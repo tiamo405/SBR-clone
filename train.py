@@ -24,7 +24,7 @@ class yoochoose_data_64():
     dataset = 'yoochoose_data_64'
     batchSize = 75
     hiddenSize = 120
-    epoch = 1
+    epoch = 100
     lr = 0.001
     lr_dc = 0.1
     lr_dc_step = 3
